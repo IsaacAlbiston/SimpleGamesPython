@@ -424,17 +424,19 @@ class ComputerKnowledge():
         return self._possibleMoves[0]
 
 
-#class that enforces the rules of the game naughts and crosses
+#class that enforces the rules of the game noughts and crosses
 class TicTacToe(GameType):
 
-    #initialises the naughts and crosses board as a 3x3 empty board
+    #initialises the noughts and crosses board as a 3x3 empty board
     def __init__(self):
         self.__size = 5
         self.__gameBoard = Board(self.__size,self.__size)
         self.__lastPlayerMove = [0,0]
         self.__computerKnowledge = ComputerKnowledge(self.__size)
-        self.__crossesWin = False
+        self.__noughtMark = "O"
+        self.__crossMark = "X"
         self.__noughtsWin = False
+        self.__crossesWin = False
 
     #returns a string of text containing instructions for playing
     def introMessage(self):
@@ -476,7 +478,7 @@ class TicTacToe(GameType):
         print("Selected move choice:")
         print(__moveChoice)
         #updates the game board with the selected move
-        __currentBoard[__moveChoice[1]][__moveChoice[0]]="X"
+        __currentBoard[__moveChoice[1]][__moveChoice[0]]=self.__crossMark
         self.__gameBoard.setBoard(__currentBoard)
 
         #updates the information about the computer with the computers current move
@@ -493,10 +495,10 @@ class TicTacToe(GameType):
         __currentBoard = self.__gameBoard.getBoard()
         if __currentBoard[y][x]== " ":
             if player == 1:
-                __currentBoard[y][x]="O"
+                __currentBoard[y][x]=self.__noughtMark
                 self.__lastPlayerMove = [x,y]
             if player == 2:
-                __currentBoard[y][x]="X"
+                __currentBoard[y][x]=self.__crossMark
             self.__gameBoard.setBoard(__currentBoard)
             return True
         return False
@@ -504,11 +506,11 @@ class TicTacToe(GameType):
     #checks if the game should end
     def gameEndCheck(self):
         #checks for any lines of Xs
-        if self.__gameBoard.anyRowSame()=="X" or self.__gameBoard.anyColumnSame()=="X" or self.__gameBoard.anyDiagonalSame()=="X":
+        if self.__gameBoard.anyRowSame()==self.__crossMark or self.__gameBoard.anyColumnSame()==self.__crossMark or self.__gameBoard.anyDiagonalSame()==self.__crossMark:
             self.__crossesWin = True
             return True
         #checks for any lines of Os
-        if self.__gameBoard.anyRowSame()=="O" or self.__gameBoard.anyColumnSame()=="O" or self.__gameBoard.anyDiagonalSame()=="O":
+        if self.__gameBoard.anyRowSame()==self.__noughtMark or self.__gameBoard.anyColumnSame()==self.__noughtMark or self.__gameBoard.anyDiagonalSame()==self.__noughtMark:
             self.__noughtsWin = True
             return True
         #checks for the gameboard being full
