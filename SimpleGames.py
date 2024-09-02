@@ -323,53 +323,6 @@ class ComputerKnowledge():
                 return move
         return __moves
 
-    #returns a list of the index(s) of any integers in scores that are greater than (length of scores - 1)
-    def almostFullLines(self, scores):
-        __greatLines = []
-        for i in range (0, len(scores)):
-            if scores[i]+1 >= len(scores):
-                __greatLines.append(i)
-        return __greatLines
-
-
-    #returns the coordinates of a winning move for either player
-    #if there are no winning moves returns an empty list
-    #priority is given to returning a winning move for the computer
-    def greatMove(self):
-        __greatMove = []
-        __greatColumn = -1
-        __greatPlayerColumns = []
-        __greatComputerColumns = []
-        __greatRow = -1
-        __greatPlayerRows = []
-        __greatComputerRows = []
-
-        #find any columns where someone has almost won
-        __greatComputerColumns = self.almostFullLines(self.__computerColumnScores)
-        __greatPlayerColumns = self.almostFullLines(self.__playerColumnScores)
-        if len(__greatComputerColumns) >= 1:
-            __greatColumn = __greatComputerColumns[0]
-        elif len(__greatPlayerColumns) >= 1:
-            __greatColumn = __greatPlayerColumns[0]
-
-
-        if __greatColumn >= 0:
-            __greatMove = self.findPossible(__greatColumn, 0)
-
-        #find any rows where someone has almost won
-        __greatComputerRows = self.almostFullLines(self.__computerRowScores)
-        __greatPlayerRows = self.almostFullLines(self.__playerRowScores)
-        if len(__greatComputerRows) >= 1:
-            __greatRow = __greatComputerRows[0]
-        elif len(__greatPlayerRows) >= 1:
-            __greatRow = __greatPlayerRows[0]
-
-        if __greatRow >= 0:
-            __greatMove = self.findPossible(__greatRow, 1)
-
-        #TO DO add finding diagonals where someone has almost won
-        return __greatMove
-
 
     #returns the index of the highest integer in line where the integer at the same index in other line is 0
     def bestNoContestLine(self, line, otherLine):
@@ -458,18 +411,14 @@ class TicTacToe(GameType):
         #updates the information about the player with the players last move
         self.__computerKnowledge.updateKnowledge(self.__lastPlayerMove, True)
 
-        #sets the first great move possible as the move choice
-        __moveChoice = self.__computerKnowledge.greatMove()
-        print("Great move choice:")
-        print(__moveChoice)
 
-        #if there was no great move sets the first good move possible as the move choice
+        #sets the first good move possible as the move choice
         if len(__moveChoice) == 0:
             __moveChoice = self.__computerKnowledge.goodMove()
             print("Good move choice:")
             print(__moveChoice)
 
-        #if there was no great or good moves sets a random legal move as the move choice
+        #if there was no good moves sets a random legal move as the move choice
         if len(__moveChoice) == 0:
             __moveChoice = self.__computerKnowledge.randomMove()
             print("Random move choice:")
