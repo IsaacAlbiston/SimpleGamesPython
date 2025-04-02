@@ -186,67 +186,6 @@ class LocalResponse():
             return int(__playerResponse)
         return -10000000
 
-#class which allows a user to interact with a game through a discord bot
-class DiscordResponse():
-
-    #initialises the class with a counter to keep track of the number of interactions the class has
-    def __init__(self):
-        client = discord.Client()
-        self.__actionCounter = 0
-        #sets bot to online using unqiue key
-        client.run("ODE4ODYyNDE0MTk5NTIxMzIz.YEePDQ.y4Kcl3I1pbquZQ0SIRzS0nExMcw")
-
-    #@client.event
-    #def on_ready():
-    #    print("We have logged in as {0.user}".format(client))
-    #    activity = discord.Game(name="[help]")
-    #    await client.change_presence(status=discord.Status.idle, activity=activity)
-
-    #prints a message asking what game the user wants
-    #returns the response if it is a number, otherwise returns 0
-    #@client.event
-    #def selectGame(self):
-
-
-    #prints a message asking how many players want to play
-    #returns the response if it is a number, otherwise returns 2
-    #def selectNoOfPlayers(self):
-
-
-    #prints a message asking what response mode the user wants
-    #returns the response if it is a number, otherwise returns 0
-    #def responseModeCheck(self):
-
-
-    #prints a message asking if the player wants to stop playing
-    #returns True if the response is "y", otherwise returns False
-    #def checkIfClose(self):
-
-
-    #prints a given message to the python shell
-    #divides messages containing /n onto different lines
-    #def message(self,text):
-
-
-    #Prints a message asking player 1 for an x coordinate
-    #returns the x coordinate given or a large negative number if the response wasn't a number
-    #def player1ActionX(self):
-
-
-    #Prints a message asking player 1 for a y coordinate
-    #returns the y coordinate given or a large negative number if the response wasn't a number
-    #def player1ActionY(self):
-
-
-    #Prints a message asking player 2 for an x coordinate
-    #returns the x coordinate given or a large negative number if the response wasn't a number
-    #def player2ActionX(self):
-
-
-    #Prints a message asking player 2 for a y coordinate
-    #returns the y coordinate given or a large negative number if the response wasn't a number    
-    #def player2ActionY(self):
-
 
 #abstract class that acts as the superclass for all game types
 class GameType(ABC):
