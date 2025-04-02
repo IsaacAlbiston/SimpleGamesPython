@@ -186,67 +186,6 @@ class LocalResponse():
             return int(__playerResponse)
         return -10000000
 
-#class which allows a user to interact with a game through a discord bot
-class DiscordResponse():
-
-    #initialises the class with a counter to keep track of the number of interactions the class has
-    def __init__(self):
-        client = discord.Client()
-        self.__actionCounter = 0
-        #sets bot to online using unqiue key
-        client.run("ODE4ODYyNDE0MTk5NTIxMzIz.YEePDQ.y4Kcl3I1pbquZQ0SIRzS0nExMcw")
-
-    #@client.event
-    #def on_ready():
-    #    print("We have logged in as {0.user}".format(client))
-    #    activity = discord.Game(name="[help]")
-    #    await client.change_presence(status=discord.Status.idle, activity=activity)
-
-    #prints a message asking what game the user wants
-    #returns the response if it is a number, otherwise returns 0
-    #@client.event
-    #def selectGame(self):
-
-
-    #prints a message asking how many players want to play
-    #returns the response if it is a number, otherwise returns 2
-    #def selectNoOfPlayers(self):
-
-
-    #prints a message asking what response mode the user wants
-    #returns the response if it is a number, otherwise returns 0
-    #def responseModeCheck(self):
-
-
-    #prints a message asking if the player wants to stop playing
-    #returns True if the response is "y", otherwise returns False
-    #def checkIfClose(self):
-
-
-    #prints a given message to the python shell
-    #divides messages containing /n onto different lines
-    #def message(self,text):
-
-
-    #Prints a message asking player 1 for an x coordinate
-    #returns the x coordinate given or a large negative number if the response wasn't a number
-    #def player1ActionX(self):
-
-
-    #Prints a message asking player 1 for a y coordinate
-    #returns the y coordinate given or a large negative number if the response wasn't a number
-    #def player1ActionY(self):
-
-
-    #Prints a message asking player 2 for an x coordinate
-    #returns the x coordinate given or a large negative number if the response wasn't a number
-    #def player2ActionX(self):
-
-
-    #Prints a message asking player 2 for a y coordinate
-    #returns the y coordinate given or a large negative number if the response wasn't a number    
-    #def player2ActionY(self):
-
 
 #abstract class that acts as the superclass for all game types
 class GameType(ABC):
@@ -323,53 +262,6 @@ class ComputerKnowledge():
                 return move
         return __moves
 
-    #returns a list of the index(s) of any integers in scores that are greater than (length of scores - 1)
-    def almostFullLines(self, scores):
-        __greatLines = []
-        for i in range (0, len(scores)):
-            if scores[i]+1 >= len(scores):
-                __greatLines.append(i)
-        return __greatLines
-
-
-    #returns the coordinates of a winning move for either player
-    #if there are no winning moves returns an empty list
-    #priority is given to returning a winning move for the computer
-    def greatMove(self):
-        __greatMove = []
-        __greatColumn = -1
-        __greatPlayerColumns = []
-        __greatComputerColumns = []
-        __greatRow = -1
-        __greatPlayerRows = []
-        __greatComputerRows = []
-
-        #find any columns where someone has almost won
-        __greatComputerColumns = self.almostFullLines(self.__computerColumnScores)
-        __greatPlayerColumns = self.almostFullLines(self.__playerColumnScores)
-        if len(__greatComputerColumns) >= 1:
-            __greatColumn = __greatComputerColumns[0]
-        elif len(__greatPlayerColumns) >= 1:
-            __greatColumn = __greatPlayerColumns[0]
-
-
-        if __greatColumn >= 0:
-            __greatMove = self.findPossible(__greatColumn, 0)
-
-        #find any rows where someone has almost won
-        __greatComputerRows = self.almostFullLines(self.__computerRowScores)
-        __greatPlayerRows = self.almostFullLines(self.__playerRowScores)
-        if len(__greatComputerRows) >= 1:
-            __greatRow = __greatComputerRows[0]
-        elif len(__greatPlayerRows) >= 1:
-            __greatRow = __greatPlayerRows[0]
-
-        if __greatRow >= 0:
-            __greatMove = self.findPossible(__greatRow, 1)
-
-        #TO DO add finding diagonals where someone has almost won
-        return __greatMove
-
 
     #returns the index of the highest integer in line where the integer at the same index in other line is 0
     def bestNoContestLine(self, line, otherLine):
@@ -424,17 +316,19 @@ class ComputerKnowledge():
         return self._possibleMoves[0]
 
 
-#class that enforces the rules of the game naughts and crosses
+#class that enforces the rules of the game noughts and crosses
 class TicTacToe(GameType):
 
-    #initialises the naughts and crosses board as a 3x3 empty board
+    #initialises the noughts and crosses board as a 3x3 empty board
     def __init__(self):
         self.__size = 5
         self.__gameBoard = Board(self.__size,self.__size)
         self.__lastPlayerMove = [0,0]
         self.__computerKnowledge = ComputerKnowledge(self.__size)
-        self.__crossesWin = False
+        self.__noughtMark = "O"
+        self.__crossMark = "X"
         self.__noughtsWin = False
+        self.__crossesWin = False
 
     #returns a string of text containing instructions for playing
     def introMessage(self):
@@ -456,18 +350,14 @@ class TicTacToe(GameType):
         #updates the information about the player with the players last move
         self.__computerKnowledge.updateKnowledge(self.__lastPlayerMove, True)
 
-        #sets the first great move possible as the move choice
-        __moveChoice = self.__computerKnowledge.greatMove()
-        print("Great move choice:")
-        print(__moveChoice)
 
-        #if there was no great move sets the first good move possible as the move choice
+        #sets the first good move possible as the move choice
         if len(__moveChoice) == 0:
             __moveChoice = self.__computerKnowledge.goodMove()
             print("Good move choice:")
             print(__moveChoice)
 
-        #if there was no great or good moves sets a random legal move as the move choice
+        #if there was no good moves sets a random legal move as the move choice
         if len(__moveChoice) == 0:
             __moveChoice = self.__computerKnowledge.randomMove()
             print("Random move choice:")
@@ -476,7 +366,7 @@ class TicTacToe(GameType):
         print("Selected move choice:")
         print(__moveChoice)
         #updates the game board with the selected move
-        __currentBoard[__moveChoice[1]][__moveChoice[0]]="X"
+        __currentBoard[__moveChoice[1]][__moveChoice[0]]=self.__crossMark
         self.__gameBoard.setBoard(__currentBoard)
 
         #updates the information about the computer with the computers current move
@@ -493,10 +383,10 @@ class TicTacToe(GameType):
         __currentBoard = self.__gameBoard.getBoard()
         if __currentBoard[y][x]== " ":
             if player == 1:
-                __currentBoard[y][x]="O"
+                __currentBoard[y][x]=self.__noughtMark
                 self.__lastPlayerMove = [x,y]
             if player == 2:
-                __currentBoard[y][x]="X"
+                __currentBoard[y][x]=self.__crossMark
             self.__gameBoard.setBoard(__currentBoard)
             return True
         return False
@@ -504,11 +394,11 @@ class TicTacToe(GameType):
     #checks if the game should end
     def gameEndCheck(self):
         #checks for any lines of Xs
-        if self.__gameBoard.anyRowSame()=="X" or self.__gameBoard.anyColumnSame()=="X" or self.__gameBoard.anyDiagonalSame()=="X":
+        if self.__gameBoard.anyRowSame()==self.__crossMark or self.__gameBoard.anyColumnSame()==self.__crossMark or self.__gameBoard.anyDiagonalSame()==self.__crossMark:
             self.__crossesWin = True
             return True
         #checks for any lines of Os
-        if self.__gameBoard.anyRowSame()=="O" or self.__gameBoard.anyColumnSame()=="O" or self.__gameBoard.anyDiagonalSame()=="O":
+        if self.__gameBoard.anyRowSame()==self.__noughtMark or self.__gameBoard.anyColumnSame()==self.__noughtMark or self.__gameBoard.anyDiagonalSame()==self.__noughtMark:
             self.__noughtsWin = True
             return True
         #checks for the gameboard being full
