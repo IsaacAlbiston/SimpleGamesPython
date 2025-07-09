@@ -1,4 +1,5 @@
 from games.noughts_and_crosses.noughts_and_crosses import NoughtsAndCrosses
+from games.connect_four.connect_four import ConnectFour
 from shell_response import ShellResponse
 
 #class responsible for managing the turns in the game
@@ -11,9 +12,12 @@ class TurnOrganiser:
         self.__player1Turn = True
         self.__gameRunning = True
         self.__computerPlaying = True
+        self.__gameNumber = gameNumber
         #sets selected game mode
         if gameNumber == 0:
             self.game = NoughtsAndCrosses()
+        elif gameNumber == 1:
+            self.game = ConnectFour()
         #sets selected response type
         if responseMode == 0:
             self.response = ShellResponse()
@@ -34,7 +38,11 @@ class TurnOrganiser:
             #Accepts responses from player 1 on their turn
             if self.__player1Turn:
                 self.response.message("Player 1's turn.")
-                if self.game.playerAction(self.response.player1ActionX(),self.response.player1ActionY(),1):
+                if self.game == ConnectFour:
+                    actionAttempt = self.game.playerAction(self.response.player1ActionX(),0,1)
+                else:
+                    actionAttempt = self.game.playerAction(self.response.player1ActionX(),self.response.player1ActionY(),1)
+                if actionAttempt:
                     self.__player1Turn = False
                     self.response.message(self.game.displayCurrentBoard())
                 else:
@@ -50,7 +58,11 @@ class TurnOrganiser:
             #If player 2 is not this python code
             else:
                 self.response.message("Player 2's turn.")
-                if self.game.playerAction(self.response.player2ActionX(),self.response.player2ActionY(),2):
+                if self.__gameNumber == 1:
+                    actionAttempt = self.game.playerAction(self.response.player2ActionX(),0,1)
+                else:
+                    actionAttempt = self.game.playerAction(self.response.player2ActionX(),self.response.player2ActionY(),1)
+                if actionAttempt:
                     self.__player1Turn = True
                     self.response.message(self.game.displayCurrentBoard())
                 else:

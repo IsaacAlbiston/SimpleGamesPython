@@ -8,7 +8,7 @@ class ShellResponse():
     #prints a message asking what game the user wants
     #returns the response if it is a number, otherwise returns 0
     def selectGame(self):
-        __gameResponse = input("What game do you want to play, please enter 0 for Noughts and Crosses")
+        __gameResponse = input("What game do you want to play, please enter 0 for Noughts and Crosses or 1 for Connect Four")
         if __gameResponse.isdigit():
             return int(__gameResponse)
         return 0

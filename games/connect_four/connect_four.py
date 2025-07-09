@@ -26,7 +26,7 @@ class ConnectFour(GameType):
         if x<0 or x>=self.__size:
             return False
         __currentBoard = self.__gameBoard.getBoard()
-        yCoord = __currentBoard.lowestSpaceInColumn(x)
+        yCoord = self.__gameBoard.lowestSpaceInColumn(x)
         if yCoord != -1:
             if player == 1:
                 __currentBoard[yCoord][x]=self.__redToken
