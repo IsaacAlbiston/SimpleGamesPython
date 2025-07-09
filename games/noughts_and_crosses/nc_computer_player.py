@@ -37,7 +37,6 @@ class NoughtsAndCrossesComputerPlayer():
 
             if newMove[0] == len(self.__computerColumnScores) - 1 - newMove[1]:
                 self.__playerDiagonalScores[1] += 1
-            print([self.__playerColumnScores,self.__playerRowScores,self.__playerDiagonalScores])
         else:
             self.__computerColumnScores[newMove[0]] += 1
             self.__computerRowScores[newMove[1]] += 1
@@ -47,7 +46,6 @@ class NoughtsAndCrossesComputerPlayer():
 
             if newMove[0] == len(self.__computerColumnScores) - 1 - newMove[1]:
                 self.__computerDiagonalScores[1] += 1
-            print([self.__computerColumnScores,self.__computerRowScores,self.__computerDiagonalScores])
 
 
     #if coordPos is 0 finds a coordinate in possible moves where x = location

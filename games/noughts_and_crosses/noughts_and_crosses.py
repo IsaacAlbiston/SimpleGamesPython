@@ -40,17 +40,11 @@ class NoughtsAndCrosses(GameType):
         #sets the first good move possible as the move choice
         if len(__moveChoice) == 0:
             __moveChoice = self.__computerKnowledge.goodMove()
-            print("Good move choice:")
-            print(__moveChoice)
 
         #if there was no good moves sets a random legal move as the move choice
         if len(__moveChoice) == 0:
             __moveChoice = self.__computerKnowledge.randomMove()
-            print("Random move choice:")
-            print(__moveChoice)
 
-        print("Selected move choice:")
-        print(__moveChoice)
         #updates the game board with the selected move
         __currentBoard[__moveChoice[1]][__moveChoice[0]]=self.__crossMark
         self.__gameBoard.setBoard(__currentBoard)
