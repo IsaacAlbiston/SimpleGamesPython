@@ -58,6 +58,12 @@ class Board:
                 __diagonalContents=" "
         return __diagonalContents
 
+    def lowestSpaceInColumn(self, x):
+        for i in range (0,len(self.__rowList)):
+            if self.__rowList[i].getRow()[x]==" ":
+                return i
+        return -1
+
     #returns true if the board has no empty spaces, otherwise returns false
     def boardFullCheck(self):
         for i in range (0,len(self.__rowList)):
