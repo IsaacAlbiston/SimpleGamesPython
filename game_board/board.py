@@ -9,6 +9,34 @@ class Board:
         for i in range (0,height):
             self.__rowList.append(Row(width))
 
+    #checks if any column on the board has a specified number of indentical adjacent characters
+    #returns the identical characters in the column if found, otherwise returns " "
+    def checkNumberAdjacentInColumn(self, adjacentSizeToFind):
+        #iterates through the columns on the board
+        charCount = 1
+        previousChar = " "
+        for i in range (0,len(self.__rowList)):
+            currentRow = self.__rowList[0].getRow()
+            #iterates through the spaces of each column
+            for j in range (0,len(currentRow)):
+                currentRow = self.__rowList[j].getRow()
+                if previousChar==currentRow[i]:
+                    charCount += 1
+                else:
+                    charCount = 1
+                previousChar = currentRow[i]
+                if (previousChar != " " and charCount== adjacentSizeToFind):
+                    return previousChar
+        return " "
+    
+    #checks if any row on the board has a specified number of indentical adjacent characters
+    #returns the identical characters in the row if found, otherwise returns " "
+    def checkNumberAdjacentInRow(self, adjacentSizeToFind):
+        for row in self.__rowList:
+            if not row.rowAdjacentIdentical(adjacentSizeToFind)==" ":
+                return row.rowAdjacentIdentical(adjacentSizeToFind)
+        return " "
+
     #checks if any row on the board has identical characters in all spaces
     #returns the characters in the spaces of the row if found, otherwise returns " "
     def anyRowSame(self):

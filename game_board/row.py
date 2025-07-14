@@ -7,6 +7,19 @@ class Row:
         self.__spaceList = []
         for i in range (0,width):
             self.__spaceList.append(Space())
+    
+    def rowAdjacentIdentical(self, adjacentSizeToFind):
+        previousChar = " "
+        charCount = 1
+        for i in range (0,len(self.__spaceList)):
+            if previousChar == self.__spaceList[i].getSpaceContents():
+                charCount += 1
+            else:
+                charCount = 1
+            previousChar = self.__spaceList[i].getSpaceContents()
+            if (previousChar != " " and charCount== adjacentSizeToFind):
+                return previousChar
+        return " "
 
     #checks if the row has identical characters in all spaces
     #if True returns the identical characters, otherwise returns " "

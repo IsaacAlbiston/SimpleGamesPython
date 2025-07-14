@@ -38,7 +38,7 @@ class TurnOrganiser:
             #Accepts responses from player 1 on their turn
             if self.__player1Turn:
                 self.response.message("Player 1's turn.")
-                if self.game == ConnectFour:
+                if self.__gameNumber == 1:
                     actionAttempt = self.game.playerAction(self.response.player1ActionX(),0,1)
                 else:
                     actionAttempt = self.game.playerAction(self.response.player1ActionX(),self.response.player1ActionY(),1)
@@ -59,9 +59,9 @@ class TurnOrganiser:
             else:
                 self.response.message("Player 2's turn.")
                 if self.__gameNumber == 1:
-                    actionAttempt = self.game.playerAction(self.response.player2ActionX(),0,1)
+                    actionAttempt = self.game.playerAction(self.response.player2ActionX(),0,2)
                 else:
-                    actionAttempt = self.game.playerAction(self.response.player2ActionX(),self.response.player2ActionY(),1)
+                    actionAttempt = self.game.playerAction(self.response.player2ActionX(),self.response.player2ActionY(),2)
                 if actionAttempt:
                     self.__player1Turn = True
                     self.response.message(self.game.displayCurrentBoard())
