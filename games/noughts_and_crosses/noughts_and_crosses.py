@@ -24,8 +24,8 @@ class NoughtsAndCrosses(GameType):
     def displayCurrentBoard(self):
         __textBoard = ""
         __currentBoard = self.__gameBoard.getBoard()
-        for i in range (0, len(__currentBoard)):
-            __textBoard = __textBoard + "|".join(__currentBoard[i]) + "/n"
+        for i in range (1, len(__currentBoard)+1):
+            __textBoard = __textBoard + "|".join(__currentBoard[len(__currentBoard)-i]) + "/n"
         return __textBoard
 
     #decides where to place an X based on the current game board
