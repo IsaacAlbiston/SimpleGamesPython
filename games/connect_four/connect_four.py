@@ -40,11 +40,11 @@ class ConnectFour(GameType):
     #checks if the game should end
     def gameEndCheck(self):
         #checks for any lines of Xs
-        if self.__gameBoard.checkNumberAdjacentInColumn(4)==self.__redToken or self.__gameBoard.checkNumberAdjacentInRow(4)==self.__redToken:
+        if self.__gameBoard.checkNumberAdjacentInColumn(4)==self.__redToken or self.__gameBoard.checkNumberAdjacentInRow(4)==self.__redToken or self.__gameBoard.checkNumberAdjacentInDiagonal(4)==self.__redToken:
             self.__redWin = True
             return True
         #checks for any lines of Os
-        if self.__gameBoard.checkNumberAdjacentInColumn(4)==self.__yellowToken or self.__gameBoard.checkNumberAdjacentInRow(4)==self.__yellowToken:
+        if self.__gameBoard.checkNumberAdjacentInColumn(4)==self.__yellowToken or self.__gameBoard.checkNumberAdjacentInRow(4)==self.__yellowToken or self.__gameBoard.checkNumberAdjacentInDiagonal(4)==self.__yellowToken:
             self.__yellowWin = True
             return True
         #checks for the gameboard being full

@@ -12,9 +12,9 @@ class Board:
     #checks if any column on the board has a specified number of indentical adjacent characters
     #returns the identical characters in the column if found, otherwise returns " "
     def checkNumberAdjacentInColumn(self, adjacentSizeToFind):
-        #iterates through the columns on the board
         charCount = 1
         previousChar = " "
+        #iterates through the columns on the board
         for i in range (0,len(self.__rowList)):
             currentRow = self.__rowList[0].getRow()
             #iterates through the spaces of each column
@@ -36,6 +36,69 @@ class Board:
             if not row.rowAdjacentIdentical(adjacentSizeToFind)==" ":
                 return row.rowAdjacentIdentical(adjacentSizeToFind)
         return " "
+    
+    #checks if any diagonal on the board has a specified number of indentical adjacent characters
+    #returns the identical characters in the diagonal if found, otherwise returns " "
+    def checkNumberAdjacentInDiagonal(self, adjacentSizeToFind):
+        charCount = 1
+        previousChar = " "
+        height = len(self.__rowList)
+        width = len(self.__rowList[0].getRow())
+        for i in range (0, height):
+            currentColumn = 0
+            charCount = 1
+            previousChar = " "
+            for j in range (i, height):
+                currentRow = self.__rowList[j].getRow()
+                if previousChar==currentRow[currentColumn]:
+                    charCount += 1
+                else:
+                    charCount = 1
+                previousChar = currentRow[currentColumn]
+                if (previousChar != " " and charCount == adjacentSizeToFind):
+                    return previousChar
+                currentColumn += 1
+            currentColumn = 0
+            charCount = 1
+            previousChar = " "
+            for j in range (i, -1, -1):
+                currentRow = self.__rowList[j].getRow()
+                if previousChar==currentRow[currentColumn]:
+                    charCount += 1
+                else:
+                    charCount = 1
+                previousChar = currentRow[currentColumn]
+                if (previousChar != " " and charCount == adjacentSizeToFind):
+                    return previousChar
+                currentColumn += 1
+            currentColumn = width-1
+            charCount = 1
+            previousChar = " "
+            for j in range (i, height):
+                currentRow = self.__rowList[j].getRow()
+                if previousChar==currentRow[currentColumn]:
+                    charCount += 1
+                else:
+                    charCount = 1
+                previousChar = currentRow[currentColumn]
+                if (previousChar != " " and charCount == adjacentSizeToFind):
+                    return previousChar
+                currentColumn -= 1
+            currentColumn = width-1
+            charCount = 1
+            previousChar = " "
+            for j in range (i, -1, -1):
+                currentRow = self.__rowList[j].getRow()
+                if previousChar==currentRow[currentColumn]:
+                    charCount += 1
+                else:
+                    charCount = 1
+                previousChar = currentRow[currentColumn]
+                if (previousChar != " " and charCount == adjacentSizeToFind):
+                    return previousChar
+                currentColumn -= 1
+        return " "
+
 
     #checks if any row on the board has identical characters in all spaces
     #returns the characters in the spaces of the row if found, otherwise returns " "
