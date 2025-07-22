@@ -19,12 +19,12 @@ class Board:
             currentRow = self.__rowList[0].getRow()
             #iterates through the spaces of each column
             for j in range (0,len(currentRow)):
-                currentRow = self.__rowList[j].getRow()
-                if previousChar==currentRow[i]:
+                currentRow = self.__rowList[i].getRow()
+                if previousChar==currentRow[j]:
                     charCount += 1
                 else:
                     charCount = 1
-                previousChar = currentRow[i]
+                previousChar = currentRow[j]
                 if (previousChar != " " and charCount== adjacentSizeToFind):
                     return previousChar
         return " "
@@ -58,19 +58,7 @@ class Board:
                 if (previousChar != " " and charCount == adjacentSizeToFind):
                     return previousChar
                 currentColumn += 1
-            currentColumn = 0
-            charCount = 1
-            previousChar = " "
-            for j in range (i, -1, -1):
-                currentRow = self.__rowList[j].getRow()
-                if previousChar==currentRow[currentColumn]:
-                    charCount += 1
-                else:
-                    charCount = 1
-                previousChar = currentRow[currentColumn]
-                if (previousChar != " " and charCount == adjacentSizeToFind):
-                    return previousChar
-                currentColumn += 1
+
             currentColumn = width-1
             charCount = 1
             previousChar = " "
@@ -84,19 +72,33 @@ class Board:
                 if (previousChar != " " and charCount == adjacentSizeToFind):
                     return previousChar
                 currentColumn -= 1
-            currentColumn = width-1
+        for i in range (0, width):
+            currentRow = 0
             charCount = 1
             previousChar = " "
-            for j in range (i, -1, -1):
-                currentRow = self.__rowList[j].getRow()
-                if previousChar==currentRow[currentColumn]:
+            for j in range (i, width):
+                if previousChar==self.__rowList[j].getRow()[currentRow]:
                     charCount += 1
                 else:
                     charCount = 1
-                previousChar = currentRow[currentColumn]
+                previousChar = self.__rowList[j].getRow()[currentRow]
                 if (previousChar != " " and charCount == adjacentSizeToFind):
                     return previousChar
-                currentColumn -= 1
+                currentRow += 1
+
+            currentRow = 0
+            charCount = 1
+            previousChar = " "
+            for j in range (i, -1, -1):
+                if previousChar==self.__rowList[j].getRow()[currentRow]:
+                    charCount += 1
+                else:
+                    charCount = 1
+                previousChar = self.__rowList[j].getRow()[currentRow]
+                if (previousChar != " " and charCount == adjacentSizeToFind):
+                    return previousChar
+                currentRow -= 1
+
         return " "
 
 
