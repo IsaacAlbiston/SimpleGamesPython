@@ -19,12 +19,12 @@ class Board:
             currentRow = self.__rowList[0].getRow()
             #iterates through the spaces of each column
             for j in range (0,len(currentRow)):
-                currentRow = self.__rowList[i].getRow()
-                if previousChar==currentRow[j]:
+                currentRow = self.__rowList[j].getRow()
+                if previousChar==currentRow[i]:
                     charCount += 1
                 else:
                     charCount = 1
-                previousChar = currentRow[j]
+                previousChar = currentRow[i]
                 if (previousChar != " " and charCount== adjacentSizeToFind):
                     return previousChar
         return " "
