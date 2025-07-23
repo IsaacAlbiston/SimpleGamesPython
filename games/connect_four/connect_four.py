@@ -58,8 +58,6 @@ class ConnectFour(GameType):
     #checks if the game should end
     def gameEndCheck(self):
         #checks for any lines of Xs
-        print("checking game end status")
-        print(self.__gameBoard.checkNumberAdjacentInColumn(4))
         if self.__gameBoard.checkNumberAdjacentInColumn(4)==self.__redToken or self.__gameBoard.checkNumberAdjacentInRow(4)==self.__redToken or self.__gameBoard.checkNumberAdjacentInDiagonal(4)==self.__redToken:
             self.__redWin = True
             return True

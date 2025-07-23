@@ -20,10 +20,10 @@ class ConnectFourComputerPlayer():
                 for j in range (-1, 2):
                     additionalScore = 1
                     keepSearching = True
-                    x=newMove[0]+i*additionalScore
-                    y=newMove[1]+j*additionalScore
-                    if x>=0 and x<len(self.__boardState) and y<len(self.__boardState) and y>=0:
-                        if self.__boardScore[x][y]>=0:
+                    x=newMove[0]-i
+                    y=newMove[1]-j
+                    if newMove[0]+i>=0 and newMove[0]+i<len(self.__boardState) and newMove[1]+j<len(self.__boardState) and newMove[1]+j>=0:
+                        if self.__boardScore[newMove[0]+i][newMove[1]+j]>=0:
                             while keepSearching:
                                 if x>=0 and x<len(self.__boardState) and y<len(self.__boardState) and y>=0:
                                     if self.__boardState[x][y] == "Player":
@@ -34,17 +34,17 @@ class ConnectFourComputerPlayer():
                                         keepSearching = False
                                 else: 
                                     keepSearching = False
-                            self.__boardScore[newMove[0]+i][newMove[1]+j] += additionalScore
+                            self.__boardScore[newMove[0]+i][newMove[1]+j] += (additionalScore*additionalScore)
         else:
             self.__boardState[newMove[0]][newMove[1]] = "Computer"
             for i in range (-1, 2):
                 for j in range (-1, 2):
                     additionalScore = 1
                     keepSearching = True
-                    x=newMove[0]+i*additionalScore
-                    y=newMove[1]+j*additionalScore
-                    if x>=0 and x<len(self.__boardState) and y<len(self.__boardState) and y>=0:
-                        if self.__boardScore[x][y]>=0:
+                    x=newMove[0]-i
+                    y=newMove[1]-j
+                    if newMove[0]+i>=0 and newMove[0]+i<len(self.__boardState) and newMove[1]+j<len(self.__boardState) and newMove[1]+j>=0:
+                        if self.__boardScore[newMove[0]+i][newMove[1]+j]>=0:
                             while keepSearching:
                                 if x>=0 and x<len(self.__boardState) and y<len(self.__boardState) and y>=0:
                                     if self.__boardState[x][y] == "Computer":
@@ -55,7 +55,7 @@ class ConnectFourComputerPlayer():
                                         keepSearching = False
                                 else: 
                                     keepSearching = False
-                            self.__boardScore[newMove[0]+i][newMove[1]+j] += additionalScore
+                            self.__boardScore[newMove[0]+i][newMove[1]+j] += (additionalScore*additionalScore)
         print(self.__boardScore)
         print(self.__boardState)
     
@@ -72,12 +72,9 @@ class ConnectFourComputerPlayer():
         bestMoveScore = -1
         for x in range (0, len(self.__boardScore)):
             columnScore = self.findFirstPositive(self.__boardScore[x])
-            print(columnScore)
             if columnScore[0]>bestMoveScore:
                 bestMoveScore = columnScore[0]
                 bestMoveLocation[0] = x
                 bestMoveLocation[1] = columnScore[1]
-        print("best move located")
-        print(bestMoveLocation)
         return bestMoveLocation
     
