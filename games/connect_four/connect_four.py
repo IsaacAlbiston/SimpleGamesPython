@@ -29,7 +29,7 @@ class ConnectFour(GameType):
 
         __currentBoard = self.__gameBoard.getBoard()
         #updates the information about the player with the players last move
-        self.__computerKnowledge.updateKnowledge(self.__lastPlayerMove, True)
+        self.__computerKnowledge.updateKnowledge(self.__lastPlayerMove, "Player")
 
         moveChoice = self.__computerKnowledge.selectBestMove()
 
@@ -38,7 +38,7 @@ class ConnectFour(GameType):
         self.__gameBoard.setBoard(__currentBoard)
 
         #updates the information about the computer with the computers current move
-        self.__computerKnowledge.updateKnowledge(moveChoice, False)
+        self.__computerKnowledge.updateKnowledge(moveChoice, "Computer")
 
     def playerAction(self,x,y,player):
         if x<0 or x>=self.__size:
