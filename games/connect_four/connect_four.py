@@ -1,5 +1,6 @@
 from games.game_type import GameType
 from game_board.board import Board
+from games.connect_four.cf_computer_player import ConnectFourComputerPlayer
 
 class ConnectFour(GameType):
 
@@ -7,6 +8,7 @@ class ConnectFour(GameType):
         self.__size = 6
         self.__gameBoard = Board(self.__size,self.__size)
         self.__lastPlayerMove = [0,0]
+        self.__computerKnowledge = ConnectFourComputerPlayer(self.__size)
         self.__redToken = "R"
         self.__yellowToken = "Y"
         self.__redWin = False
@@ -21,6 +23,22 @@ class ConnectFour(GameType):
         for i in range (1, len(__currentBoard)+1):
             __textBoard = __textBoard + "|".join(__currentBoard[len(__currentBoard)-i]) + "/n"
         return __textBoard
+    
+    #decides where to place a Y based on the current game board
+    def computerAction(self):
+
+        __currentBoard = self.__gameBoard.getBoard()
+        #updates the information about the player with the players last move
+        self.__computerKnowledge.updateKnowledge(self.__lastPlayerMove, True)
+
+        moveChoice = self.__computerKnowledge.selectBestMove()
+
+        #updates the game board with the selected move
+        __currentBoard[moveChoice[1]][moveChoice[0]]=self.__yellowToken
+        self.__gameBoard.setBoard(__currentBoard)
+
+        #updates the information about the computer with the computers current move
+        self.__computerKnowledge.updateKnowledge(moveChoice, False)
 
     def playerAction(self,x,y,player):
         if x<0 or x>=self.__size:
@@ -40,6 +58,8 @@ class ConnectFour(GameType):
     #checks if the game should end
     def gameEndCheck(self):
         #checks for any lines of Xs
+        print("checking game end status")
+        print(self.__gameBoard.checkNumberAdjacentInColumn(4))
         if self.__gameBoard.checkNumberAdjacentInColumn(4)==self.__redToken or self.__gameBoard.checkNumberAdjacentInRow(4)==self.__redToken or self.__gameBoard.checkNumberAdjacentInDiagonal(4)==self.__redToken:
             self.__redWin = True
             return True
